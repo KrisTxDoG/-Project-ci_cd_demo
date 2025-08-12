@@ -1,0 +1,57 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    
+      - name: Show branch info
+        run: |
+          echo "github.ref is ${{ github.ref }}"
+          echo "github.ref_name is ${{ github.ref_name }}"
+         
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install backend deps
+        run: cd backend && npm install
+      - name: Test backend
+        run: cd backend && npm test
+
+      - name: Install frontend deps
+        run: cd frontend && npm install
+      - name: Test frontend
+        run: cd frontend && npm test
+
+  deploy-frontend:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+      - run: cd frontend && npm install && npm run build
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_KRISTTEST_CICD_2025 }}"
+          channelId: live
+          projectId: kristtest-cicd-2025
+
+  deploy-backend:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+      - run: cd backend && npm install
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: "my-cicd-app-demo"
+          heroku_email: "cysh110254@google.com"
