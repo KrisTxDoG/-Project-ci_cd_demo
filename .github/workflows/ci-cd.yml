@@ -59,3 +59,6 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: "my-cicd-app-demo"
           heroku_email: "cysh110254@google.com"
+          appdir: "backend" # 指定推送 backend 資料夾
+          usedocker: false  # 不用 Docker 
+          dontuseforce: 0   # 允許強制覆蓋
