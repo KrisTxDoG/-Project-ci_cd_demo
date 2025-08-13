@@ -41,7 +41,7 @@ jobs:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.MYCICDPROJECT2025 }}"
           channelId: live
-          projectId: kristtest-cicd-2025
+          projectId: my-cicd-project-2025
 
   deploy-backend:
     needs: test
