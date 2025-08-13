@@ -1,6 +1,6 @@
 <template>
   <div style="font-family: Arial, Helvetica, sans-serif; padding: 2rem;">
-    <h1>KristTest X TTT CI/CD Demo — Frontend</h1>
+    <h1>KristTest X TTT 成功? CI/CD Demo — Frontend</h1>
     <p>This is a minimal Vue 3 app for the CI/CD demo.</p>
     <p>Backend API message: <strong id="msg">-</strong></p>
     <button @click="callApi">Call Backend</button>
